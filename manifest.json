@@ -2,7 +2,7 @@
   "name": "MetaVisium Researcher",
   "short_name": "MetaVisium",
   "description": "Metavisione",
-  "start_url": "/",
+  "start_url": "/metaresearcher/",
   "display": "standalone",
   "background_color": "#000",
   "theme_color": "#000",
@@ -23,4 +23,5 @@
       "type": "image/png"
     }
   ]
+
 }
