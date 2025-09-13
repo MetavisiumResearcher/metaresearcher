@@ -58,32 +58,31 @@
     color: var(--neon-blue);
     letter-spacing: 1px;
   }
-  #main {
-    display:flex;
+   #main {
+    display: flex;
     flex-direction: column;
-    height: calc(100% - 60px);
-    gap:4px;
-    padding:4px;
-    box-sizing:border-box;
+    height: 100%; 
+    gap: 0;  
+    padding: 0; 
+    box-sizing: border-box;
     position: relative;
-  }
-  #quadrante-wrapper {
-    position: relative;
-    width: 100%;
-    height: 70vh;
-    overflow: hidden;
-  }
-  .quadrante {
-    width: 100%;
-    height: 100%;
-    background:#000;
-    position:relative;
-    overflow:hidden;
-    min-height:120px;
-    border-radius:4px;
-    transition: all 0.5s ease;
-    cursor: pointer;
-  }
+}
+#quadrante-wrapper {
+  flex: 1; /* Occupa tutto lo spazio disponibile */
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.quadrante {
+  width: 100%;
+  height: 100%; /* Occupa il 100% dell'altezza del wrapper */
+  background:#000;
+  position:relative;
+  overflow:hidden;
+  border-radius:4px;
+  cursor: pointer;
+}
   .quadrante.expanded {
     position: absolute;
     top: 0;
@@ -128,23 +127,23 @@
     object-fit:cover;
   }
 #settings-banner {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgba(17, 17, 17, 0.95);
-    backdrop-filter: blur(8px);
-    padding: 8px;
-    border-top: 1px solid var(--neon-green);
-    box-shadow: 0 -2px 6px rgba(0, 255, 0, 0.3);
-    z-index: 95;
-    max-height: 60vh;
-    overflow-y: auto;
-    display: none;
-    transition: all 0.3s ease;
-    /* 👇 Aggiungi questa riga */
-    box-sizing: border-box;
+ position: fixed;  
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 70vh;
+  background: rgba(17, 17, 17, 0.95);
+  backdrop-filter: blur(8px);
+  padding: 8px;
+  border-top: 1px solid var(--neon-green);
+  box-shadow: 0 -2px 6px rgba(0, 255, 0, 0.3);
+  z-index: 95;
+  overflow-y: auto;
+  display: none; 
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
+
   #settings-banner.active {
     display: block;
   }
@@ -224,30 +223,33 @@
     margin: 2px 0 0 0;
     color: #999;
   }
-  #toggle-settings-btn {
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 96;
-    background: var(--neon-green);
-    color: #000;
-    border: 1px solid var(--neon-green);
-    padding: 6px 12px;
-    border-radius: 20px;
+#toggle-settings-btn {
+    background: var(--muted);
+    color: var(--neon-blue); 
+    border: 1px solid var(--neon-blue);
+    padding: 6px 10px;
+    border-radius: 30px;      /* Uguale a .video-frame-btn */
     font-size: 12px;
     font-weight: bold;
-    box-shadow: 0 0 6px var(--neon-green);
+    transition: all 0.2s ease;
     cursor: pointer;
-  }
-  #toggle-settings-btn:hover {
-    background: var(--bg);
-    color: var(--neon-green);
-  }
+    margin-left: 8px;
+    min-width: 36px;
+    text-align: center;
+    line-height: 1;
+    box-shadow: none; 
+}
+/* Hover identico a .video-frame-btn:hover */
+#toggle-settings-btn:hover {
+    background: var(--neon-blue);
+    color: #000;
+    box-shadow: 0 0 6px var(--neon-blue);
+    transform: scale(1.03);
+}
   #fixed-buttons {
     display: flex;
     justify-content: space-between;
-    padding: 4px 6px;
+    padding: 6px 10px;
     background: var(--panel);
     border-bottom: 1px solid var(--neon-blue);
     position: relative;
@@ -275,7 +277,7 @@
   }
   .video-frame-btn {
     width: 90px;
-    padding: 4px 8px;
+    padding: 6px 10px;
     border-radius: 30px;
     font-size: 11px;
     font-weight: bold;
@@ -323,6 +325,9 @@
     border-radius: 20px;
     font-size: 11px;
   }
+
+
+
   #video-frame-title {
     margin: 0;
     font-size: 16px;
@@ -343,7 +348,6 @@
     gap: 10px;
     padding: 10px 0;
   }
-
 #video-frame-canvas-container {
   width: 100%;
   max-height: 50vh;
@@ -358,15 +362,10 @@
   padding: 10px;
   box-sizing: border-box;
 }
-
 #video-frame-canvas {
-  max-width: 100%;
-  max-height: 100%;
-  /* transition: transform 0.1s ease; */
-  /* user-select: none; */
-  /* display: block; */
-  /* object-fit: contain; */
-  /* Questi sono gestiti dal JS! */
+  width: 100%;
+  height: 100%;
+  image-rendering: crisp-edges;
 }
   #video-frame-controls {
     width: 100%;
@@ -379,7 +378,6 @@
     gap: 10px;
     box-sizing: border-box;
   }
-  /* 👇 STILE CYBERPUNK NEON PER I BOTTONI DEL VIDEO FRAME */
 .cyberpunk-btn {
     background: transparent !important;
     border: 2px solid var(--neon-green) !important;
@@ -400,7 +398,6 @@
     position: relative;
     z-index: 1;
 }
-
 .cyberpunk-btn::before {
     content: '';
     position: absolute;
@@ -415,7 +412,6 @@
     z-index: -1;
     animation: pulse-neon 2s infinite alternate;
 }
-
 .cyberpunk-btn:hover {
     color: var(--neon-blue) !important;
     border-color: var(--neon-blue) !important;
@@ -423,29 +419,13 @@
     text-shadow: 0 0 8px var(--neon-blue), 0 0 15px var(--neon-blue) !important;
     transform: scale(1.05) !important;
 }
-
 .cyberpunk-btn:hover::before {
     opacity: 1;
 }
-
 @keyframes pulse-neon {
     from { opacity: 0.3; transform: scale(1); }
     to   { opacity: 0.9; transform: scale(1.1); }
 }
-
-/* Effetto flicker leggero per realismo */
-.cyberpunk-btn:nth-child(3) { animation: flicker 3s infinite; } /* Crea Fotogrammi */
-.cyberpunk-btn:nth-child(4) { animation: flicker 4s infinite 0.5s; } /* Annulla */
-.cyberpunk-btn:nth-child(6) { animation: flicker 3.5s infinite 1s; } /* Indietro */
-.cyberpunk-btn:nth-child(7) { animation: flicker 4.5s infinite 1.5s; } /* Avanti */
-.cyberpunk-btn:nth-child(8) { animation: flicker 3s infinite 2s; } /* Negativo */
-.cyberpunk-btn:nth-child(9) { animation: flicker 4s infinite 2.5s; } /* Grigio */
-.cyberpunk-btn:nth-child(10) { animation: flicker 3.5s infinite 3s; } /* UV */
-.cyberpunk-btn:nth-child(11) { animation: flicker 4s infinite 3.5s; } /* Specchio */
-.cyberpunk-btn:nth-child(12) { animation: flicker 3s infinite 4s; } /* Reset */
-.cyberpunk-btn:nth-child(13) { animation: flicker 4.5s infinite 4.5s; } /* Tutti i Frame */
-.cyberpunk-btn:nth-child(14) { animation: flicker 3.5s infinite 5s; } /* Salva */
-
 @keyframes flicker {
     0%, 100% { opacity: 1; }
     49% { opacity: 0.9; }
@@ -458,19 +438,15 @@
     63% { opacity: 0.8; }
     65% { opacity: 0.9; }
 }
-
-/* Rendi più piccoli i bottoni .small */
 .cyberpunk-btn.small {
     padding: 6px 10px !important;
     font-size: 11px !important;
     min-width: 100px !important;
 }
-/* 👇 STILE CYBERPUNK PER IL BOTTONE FILE NASCOSTO */
 .file-input-container {
     position: relative;
     margin-bottom: 10px;
 }
-
 .file-input-container input[type="file"] {
     position: absolute;
     left: 0;
@@ -481,7 +457,6 @@
     cursor: pointer;
     z-index: 2;
 }
-
 .cyberpunk-file-label {
     font-family: 'Courier New', monospace;
     font-size: 12px !important;
@@ -501,9 +476,7 @@
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.5) !important;
     position: relative;
     z-index: 1;
-
 }
-
 .cyberpunk-file-label:hover {
     color: var(--neon-blue) !important;
     border-color: var(--neon-blue) !important;
@@ -511,7 +484,6 @@
     text-shadow: 0 0 8px var(--neon-blue), 0 0 15px var(--neon-blue) !important;
     transform: scale(1.05) !important;
 }
-
 .cyberpunk-file-label:hover::before {
     opacity: 1;
 }
@@ -530,7 +502,6 @@
     box-shadow: 0 0 15px rgba(0, 255, 0, 0.5) !important;
     transition: all 0.3s ease !important;
 }
-
 #extractionFps:hover,
 #extractionFps:focus {
     color: var(--neon-blue) !important;
@@ -728,6 +699,58 @@
       height: 100%;
     }
   }
+.frame-dimension-select {
+    font-family: 'Courier New', monospace;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    color: var(--neon-green) !important;
+    text-shadow: 0 0 3px var(--neon-green), 0 0 6px var(--neon-green) !important;
+    background: transparent !important;
+    border: 2px solid var(--neon-green) !important;
+    border-radius: 6px !important;
+    padding: 6px 10px !important;
+    cursor: pointer !important;
+    min-width: 180px;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.5) !important;
+    transition: all 0.3s ease !important;
+    margin-top: 6px;
+}
+.frame-dimension-select:hover,
+.frame-dimension-select:focus {
+    color: var(--neon-blue) !important;
+    border-color: var(--neon-blue) !important;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7) !important;
+    text-shadow: 0 0 8px var(--neon-blue), 0 0 15px var(--neon-blue) !important;
+}
+.frame-dimension-label {
+    font-family: 'Courier New', monospace;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    color: var(--neon-blue) !important;
+    text-shadow: 0 0 4px var(--neon-blue), 0 0 8px var(--neon-blue) !important;
+    margin-top: 8px;
+    margin-bottom: 4px;
+}
+.button-group.row button.small.record-btn,
+.button-group.row button.small.grayscale,
+.button-group.row button.small.pareidolia,
+.button-group.row button.small.invert {
+    background-color: var(--neon-green) !important;
+    color: #000 !important;
+    font-weight: bold !important;
+    border: 1px solid var(--neon-green) !important;
+    box-shadow: 0 0 6px var(--neon-green) !important;
+    transition: all 0.3s ease !important;
+}
+.button-group.row button.small.record-btn.active,
+.button-group.row button.small.grayscale.active,
+.button-group.row button.small.pareidolia.active,
+.button-group.row button.small.invert.active {
+    background-color: var(--neon-red) !important;
+    color: #fff !important;
+    border: 1px solid var(--neon-red) !important;
+    box-shadow: 0 0 6px var(--neon-red) !important;
+}
 </style>
 </head>
 <body>
@@ -737,9 +760,8 @@
   <div style="font-size:11px;color:var(--neon-green)">Created by Domenico Pizzurro Researcher</div>
 </header>
 <div id="fixed-buttons">
-  <button class="fullscreen-btn">Schermo Intero</button>
-  <button class="exit-fullscreen-btn">Esci Schermo Intero</button>
   <button class="video-frame-btn">Video Frame</button>
+  <button id="toggle-settings-btn">⚙️ Impostazioni</button>
 </div>
 <div id="main">
   <div id="quadrante-wrapper">
@@ -780,7 +802,6 @@
   </div>
 </div>
 <footer>MetaVisione - Created By Domenico Pizzurro</footer>
-<button id="toggle-settings-btn">⚙️ Impostazioni</button>
 <div id="video-frame-page">
  <div id="video-frame-header">
     <button id="back-to-main" class="small">Torna a MetaVisium</button>
@@ -823,6 +844,16 @@
         <button id="resetFilters" class="cyberpunk-btn">🔄 Reset Filtri</button>
     </div>
     <button id="viewAllFrames" class="cyberpunk-btn small">🖼️ Mostra Primi 50 Fotogrammi</button>
+    <label for="frameSizeSelect" class="frame-dimension-label">Dimensione Fotogramma:</label>
+    <select id="frameSizeSelect" class="frame-dimension-select">
+        <option value="native">Dimensioni Native</option>
+        <option value="320x240">320x240 (QVGA)</option>
+        <option value="640x480">640x480 (VGA)</option>
+        <option value="1280x720">1280x720 (HD)</option>
+        <option value="1920x1080">1920x1080 (Full HD)</option>
+        <option value="2560x1440">2560x1440 (2K)</option>
+        <option value="3840x2160">3840x2160 (4K)</option>
+    </select>
     <button id="saveFrame" class="cyberpunk-btn small">💾 Salva Fotogramma</button>
 </div>
     </div>
@@ -940,11 +971,15 @@ document.addEventListener('DOMContentLoaded', () => {
         q.canvas.style.display = 'none';
         q.video.style.display = 'block';
         applyVideoFilters(q);
-        alert("✅ Connessione riuscita!\nLa videocamera è attiva. Potrebbe non supportare la risoluzione o il frame rate selezionati, quindi l'immagine potrebbe apparire con dimensioni diverse.");
+      alert("✅ Connessione riuscita!\nLa videocamera è attiva.\nPotrebbe non supportare la risoluzione o il frame rate selezionati,\nquindi l'immagine potrebbe apparire con dimensioni diverse.");
       } catch (fallbackErr) {
         console.error("Errore videocamera (anche con fallback):", fallbackErr);
         webcamPermissionDenied = true;
-        alert(`❌ Impossibile avviare la videocamera.\nAssicurati che:\n1. Il dispositivo sia connesso e acceso.\n2. Non sia in uso da un'altra applicazione (es. OBS, Zoom, Skype).\n3. I driver siano aggiornati.`);
+     alert(`❌ Impossibile avviare la videocamera.
+Assicurati che:
+1. Il dispositivo sia connesso e acceso.
+2. Non sia in uso da un'altra applicazione (es. OBS, Zoom, Skype).
+3. I driver siano aggiornati.`);
         q.tipo = q.lastNoiseType || 'plasma';
         q.canvas.style.display = 'block';
         q.video.style.display = 'none';
@@ -1608,63 +1643,78 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     ctx.putImageData(img, 0, 0);
   }
-  function finalizeRGB(r,g,b, q){
-    const uvIntensity = parseFloat(q.sliderUV.value || 0);
-    if(uvIntensity > 0) {
-      const uvEffect = uvIntensity / 100;
-      r = Math.max(0, r * (1 - uvEffect * 0.7));
-      g = Math.max(0, g * (1 - uvEffect * 0.3));
-      b = Math.min(255, b * (1 + uvEffect));
-    }
-    let hsl = rgbToHsl(r, g, b);
-    const saturazione = parseFloat(q.sliderSaturazione.value) / 100;
-    hsl[1] = Math.max(0, Math.min(1, hsl[1] * saturazione));
-    const tonalita = parseFloat(q.sliderTonalita.value);
-    hsl[0] = ((hsl[0] * 360 + tonalita) % 360 + 360) % 360 / 360;
-    const colore = parseFloat(q.sliderColore.value) / 100;
-    if (colore < 1) {
-      hsl[1] = hsl[1] * colore;
-      hsl[2] = hsl[2] * colore;
-    } else {
-      hsl[2] = Math.min(1, hsl[2] + (colore - 1) * 0.5);
-    }
-    let newRgb = hslToRgb(hsl[0], hsl[1], hsl[2]);
-    r = newRgb[0];
-    g = newRgb[1];
-    b = newRgb[2];
-    if(q.grayscale){
-      const L = Math.round(luminance(r,g,b));
-      r = g = b = L;
-    }
-    const lum = luminance(r,g,b) || 1;
-    const proc = processPixelRaw(lum, q);
-    const scale = proc / lum;
-    r = Math.min(255, Math.max(0, Math.round(r * scale)));
-    g = Math.min(255, Math.max(0, Math.round(g * scale)));
-    b = Math.min(255, Math.max(0, Math.round(b * scale)));
-    if(q.invert){
-      r = 255 - r; g = 255 - g; b = 255 - b;
-    }
-    return [r,g,b];
+function finalizeRGB(r, g, b, q) {
+ 
+  const sliderUV = q.sliderUV;
+  const uvIntensity = sliderUV ? parseFloat(sliderUV.value || 0) : 0;
+  if (uvIntensity > 0) {
+    const uvEffect = uvIntensity / 100;
+    r = Math.max(0, r * (1 - uvEffect * 0.7));
+    g = Math.max(0, g * (1 - uvEffect * 0.3));
+    b = Math.min(255, b * (1 + uvEffect));
   }
-  function rgbToHsl(r, g, b){
-    r /= 255, g /= 255, b /= 255;
-    let max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h, s, l = (max + min) / 2;
-    if(max == min){
-      h = s = 0;
-    }else{
-      let d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch(max){
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-        case g: h = (b - r) / d + 2; break;
-        case b: h = (r - g) / d + 4; break;
-      }
-      h /= 6;
-    }
-    return [h, s, l];
+
+  let hsl = rgbToHsl(r, g, b);
+  
+  const sliderSaturazione = q.sliderSaturazione;
+  const saturazione = sliderSaturazione ? parseFloat(sliderSaturazione.value || 100) / 100 : 1;
+  hsl[1] = Math.max(0, Math.min(1, hsl[1] * saturazione));
+ 
+  const sliderTonalita = q.sliderTonalita;
+  const tonalita = sliderTonalita ? parseFloat(sliderTonalita.value || 0) : 0;
+  hsl[0] = ((hsl[0] * 360 + tonalita) % 360 + 360) % 360 / 360;
+  // Colore
+  const sliderColore = q.sliderColore;
+  const colore = sliderColore ? parseFloat(sliderColore.value || 100) / 100 : 1;
+  if (colore < 1) {
+    hsl[1] = hsl[1] * colore;
+    hsl[2] = hsl[2] * colore;
+  } else {
+    hsl[2] = Math.min(1, hsl[2] + (colore - 1) * 0.5);
   }
+  // ✅ Conversione di nuovo in RGB
+  let newRgb = hslToRgb(hsl[0], hsl[1], hsl[2]);
+  r = newRgb[0];
+  g = newRgb[1];
+  b = newRgb[2];
+  // Grayscale
+  if (q.grayscale) {
+    const L = Math.round(luminance(r, g, b));
+    r = g = b = L;
+  }
+  // Luminosità e processi extra
+  const lum = luminance(r, g, b) || 1;
+  const proc = processPixelRaw(lum, q);
+  const scale = proc / lum;
+  r = Math.min(255, Math.max(0, Math.round(r * scale)));
+  g = Math.min(255, Math.max(0, Math.round(g * scale)));
+  b = Math.min(255, Math.max(0, Math.round(b * scale)));
+  // Inversione
+  if (q.invert) {
+    r = 255 - r;
+    g = 255 - g;
+    b = 255 - b;
+  }
+  return [r, g, b];
+}
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  let max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+  if (max === min) {
+    h = s = 0; // grigio
+  } else {
+    let d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+  return [h, s, l];
+}
   function hslToRgb(h, s, l){
     let r, g, b;
     if(s == 0){
@@ -1834,18 +1884,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <button class="small grayscale">Scala Grigi</button>
       <button class="small pareidolia">Riduci Pareidolia</button>
       <button class="small invert">Invert</button>
-      <button class="small webcam-toggle">Attiva Videocamera</button>
-      <button class="small webcam-settings-btn" style="display: none;">Setting</button>
     </div>
-    <div class="webcam-settings-panel">
-      <h4>Impostazioni Videocamera</h4>
-      <div class="slider-group"><label>Luminosità (50-255)</label><div class="custom-slider-container"><div class="custom-slider"><div class="custom-slider-track"></div><div class="custom-slider-thumb"></div></div><span class="value-display">100</span></div></div>
-      <div class="slider-group"><label>Contrasto (0.5-3)</label><div class="custom-slider-container"><div class="custom-slider"><div class="custom-slider-track"></div><div class="custom-slider-thumb"></div></div><span class="value-display">1.0</span></div></div>
-      <div class="slider-group"><label>Saturazione (0-200)</label><div class="custom-slider-container"><div class="custom-slider"><div class="custom-slider-track"></div><div class="custom-slider-thumb"></div></div><span class="value-display">100</span></div></div>
-      <div class="slider-group"><label>Tonalità (-180-180)</label><div class="custom-slider-container"><div class="custom-slider"><div class="custom-slider-track"></div><div class="custom-slider-thumb"></div></div><span class="value-display">0</span></div></div>
-      <div class="slider-group"><label>Colore (0-200)</label><div class="custom-slider-container"><div class="custom-slider"><div class="custom-slider-track"></div><div class="custom-slider-thumb"></div></div><span class="value-display">100</span></div></div>
-    </div>
-    <div class="note" style="font-size: 9px; margin-top: 6px;">Usa la videocamera per riprendere il noise del monitor e Registralo.</div>
   `;
   settingsBanner.appendChild(div);
   const quadEl = document.getElementById('quad1');
@@ -1875,11 +1914,6 @@ document.addEventListener('DOMContentLoaded', () => {
     sliderDettagli: null,
     sliderNitidezza: null,
     sliderUV: null,
-    sliderLumWebcam: null,
-    sliderContrastWebcam: null,
-    sliderSaturazione: null,
-    sliderTonalita: null,
-    sliderColore: null,
     recorder: null, recordedChunks: [], recording: false
   };
   quadranti.push(qobj);
@@ -1887,37 +1921,6 @@ document.addEventListener('DOMContentLoaded', () => {
   sel.addEventListener('change', async (e) => {
     qobj.tipo = e.target.value;
     qobj.lastNoiseType = e.target.value;
-  });
-  const webcamToggleBtn = div.querySelector('.webcam-toggle');
-  const webcamSettingsBtn = div.querySelector('.webcam-settings-btn');
-  webcamToggleBtn.addEventListener('click', async function() {
-    if (qobj.tipo === 'webcam') {
-      qobj.tipo = qobj.lastNoiseType;
-      qobj.canvas.style.display = 'block';
-      qobj.video.style.display = 'none';
-      this.textContent = 'Attiva Videocamera';
-      this.classList.remove('active');
-      webcamSettingsBtn.style.display = 'none';
-      const webcamSettingsPanel = div.querySelector('.webcam-settings-panel');
-      webcamSettingsPanel.style.display = 'none';
-    } else {
-      qobj.lastNoiseType = qobj.tipo;
-      qobj.tipo = 'webcam';
-      currentQuadrant = qobj;
-      await getWebcamDevices();
-      webcamModal.style.display = 'block';
-      this.textContent = 'Disattiva Videocamera';
-      this.classList.add('active');
-      webcamSettingsBtn.style.display = 'inline-block';
-    }
-  });
-  webcamSettingsBtn.addEventListener('click', function() {
-    const webcamSettingsPanel = div.querySelector('.webcam-settings-panel');
-    if (webcamSettingsPanel.style.display === 'block') {
-      webcamSettingsPanel.style.display = 'none';
-    } else {
-      webcamSettingsPanel.style.display = 'block';
-    }
   });
   function createCustomSlider(container, min, max, step, initialValue, onChangeCallback) {
     const sliderTrack = container.querySelector('.custom-slider-track');
@@ -1988,12 +1991,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { selector: '.slider-group:nth-child(10) .custom-slider-container', min: 20, max: 200, step: 1, initial: 100, prop: 'sliderScala' },
     { selector: '.slider-group:nth-child(11) .custom-slider-container', min: 1, max: 10, step: 0.1, initial: 1, prop: 'sliderDettagli' },
     { selector: '.slider-group:nth-child(12) .custom-slider-container', min: 1, max: 3, step: 0.1, initial: 1, prop: 'sliderNitidezza' },
-    { selector: '.slider-group:nth-child(13) .custom-slider-container', min: 0, max: 100, step: 1, initial: 0, prop: 'sliderUV' },
-    { selector: '.webcam-settings-panel .slider-group:nth-child(1) .custom-slider-container', min: 50, max: 255, step: 1, initial: 100, prop: 'sliderLumWebcam' },
-    { selector: '.webcam-settings-panel .slider-group:nth-child(2) .custom-slider-container', min: 0.5, max: 3, step: 0.1, initial: 1, prop: 'sliderContrastWebcam' },
-    { selector: '.webcam-settings-panel .slider-group:nth-child(3) .custom-slider-container', min: 0, max: 200, step: 1, initial: 100, prop: 'sliderSaturazione' },
-    { selector: '.webcam-settings-panel .slider-group:nth-child(4) .custom-slider-container', min: -180, max: 180, step: 1, initial: 0, prop: 'sliderTonalita' },
-    { selector: '.webcam-settings-panel .slider-group:nth-child(5) .custom-slider-container', min: 0, max: 200, step: 1, initial: 100, prop: 'sliderColore' }
+    { selector: '.slider-group:nth-child(13) .custom-slider-container', min: 0, max: 100, step: 1, initial: 0, prop: 'sliderUV' } // ✅ CORRETTO: nth-child(13) per Filtro UV
   ];
   sliderConfigs.forEach(config => {
     const container = div.querySelector(config.selector);
@@ -2032,57 +2030,77 @@ document.addEventListener('DOMContentLoaded', () => {
     toggleRecord(qobj, this);
     this.classList.toggle('active', qobj.recording);
   });
-  function toggleRecord(q, btnEl){
+function toggleRecord(q, btnEl){
     if(q.tipo === 'webcam' && q.video && q.video.srcObject){
-      if(q.recording){
-        q.recorder.stop();
-        q.recording = false;
-        btnEl.textContent = 'Registra';
-      } else {
-        try{
-          const stream = q.video.srcObject;
-          q.recordedChunks = [];
-          q.recorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp8' });
-          q.recorder.ondataavailable = e => { if(e.data && e.data.size) q.recordedChunks.push(e.data); };
-          q.recorder.onstop = () => {
-            const blob = new Blob(q.recordedChunks, { type: 'video/webm' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a'); a.href = url; a.download = 'Videocamera_monitor.webm'; a.click();
-            setTimeout(()=>URL.revokeObjectURL(url), 2000);
-          };
-          q.recorder.start();
-          q.recording = true;
-          btnEl.textContent = 'Stop';
-        } catch(err){ console.error(err); alert('Impossibile registrare videocamera in questo browser.'); }
-      }
-      return;
+        if(q.recording){
+            q.recorder.stop();
+            q.recording = false;
+            btnEl.textContent = 'Registra';
+        } else {
+            try{
+                const stream = q.video.srcObject;
+                q.recordedChunks = [];
+                q.recorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp8' });
+                q.recorder.ondataavailable = e => { if(e.data && e.data.size) q.recordedChunks.push(e.data); };
+                q.recorder.onstop = () => {
+                    const blob = new Blob(q.recordedChunks, { type: 'video/webm' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a'); a.href = url; a.download = 'Videocamera_monitor.webm'; a.click();
+                    setTimeout(()=>URL.revokeObjectURL(url), 2000);
+                };
+                q.recorder.start();
+                q.recording=true;
+                btnEl.textContent='Stop';
+            } catch(err){ console.error(err); alert('Impossibile registrare videocamera in questo browser.'); }
+        }
+        return;
     }
     if(q.recording){
-      q.recorder.stop();
-      q.recording=false;
-      btnEl.textContent='Registra';
+        q.recorder.stop();
+        q.recording=false;
+        btnEl.textContent='Registra';
     } else {
-      try {
-        const fps = Math.min(60, Math.max(5, parseInt(q.sliderVel.value || 30)));
-        const stream = q.canvas.captureStream(fps);
-        q.recordedChunks = [];
-        q.recorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
-        q.recorder.ondataavailable = e => { if(e.data && e.data.size) q.recordedChunks.push(e.data); };
-        q.recorder.onstop = () => {
-          const blob = new Blob(q.recordedChunks, { type: 'video/webm' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a'); a.href = url; a.download = `Monitor_recording.webm`; a.click();
-          setTimeout(()=>URL.revokeObjectURL(url), 2000);
-        };
-        q.recorder.start();
-        q.recording=true;
-        btnEl.textContent='Stop';
-      } catch(err){
-        console.error("Record error:", err);
-        alert("Il browser potrebbe non supportare la registrazione di MediaRecorder per questo formato.");
-      }
+        try {
+            const fps = Math.min(60, Math.max(5, parseInt(q.sliderVel.value || 30)));
+            const highResCanvas = document.createElement('canvas');
+            highResCanvas.width = q.canvas.width;
+            highResCanvas.height = q.canvas.height;
+            const highResCtx = highResCanvas.getContext('2d');
+            let recordingActive = true;
+            const updateHighResFrame = () => {
+                if (!recordingActive) return;
+                highResCtx.drawImage(q.canvas, 0, 0);
+                if (recordingActive) {
+                    requestAnimationFrame(updateHighResFrame);
+                }
+            };
+            updateHighResFrame();
+            const stream = highResCanvas.captureStream(fps);
+            q.recordedChunks = [];
+            q.recorder = new MediaRecorder(stream, { mimeType: 'video/webm; codecs=vp9' });
+            q.recorder.ondataavailable = e => { if(e.data && e.data.size) q.recordedChunks.push(e.data); };
+            q.recorder.onstop = () => {
+                recordingActive = false;
+                const blob = new Blob(q.recordedChunks, { type: 'video/webm' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); 
+                a.href = url; 
+                a.download = `Monitor_recording.webm`; 
+                a.click();
+                setTimeout(()=>URL.revokeObjectURL(url), 2000);
+            };
+            q.recorder.start();
+            q.recording=true;
+            btnEl.textContent='Stop';
+            q.recorder.onpause = () => {
+                recordingActive = false;
+            };
+        } catch(err){
+            console.error("Record error:", err);
+            alert("Il browser potrebbe non supportare la registrazione di MediaRecorder per questo formato.");
+        }
     }
-  }
+}
   function renderQuadrant(q){
     if(!q.active) {
       q.ctx.clearRect(0, 0, q.canvas.width, q.canvas.height);
@@ -2134,7 +2152,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   quadranti.forEach(q => resizeCanvasToDisplaySize(q.canvas));
   document.querySelectorAll('.quadrante').forEach(quad => {
-    quad.addEventListener('dblclick', function(event) {
+  quad.addEventListener('dblclick', function(event) {
       event.preventDefault();
       if (this.classList.contains('expanded')) {
         this.classList.remove('expanded');
@@ -2155,51 +2173,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-  const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  const fullscreenBtn = document.querySelector('.fullscreen-btn');
-  const exitFullscreenBtn = document.querySelector('.exit-fullscreen-btn');
-  if (isMobileDevice) {
-    fullscreenBtn.style.display = 'none';
-    exitFullscreenBtn.style.display = 'none';
-  } else {
-    fullscreenBtn.addEventListener('click', function() {
-      const elem = document.documentElement;
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.mozRequestFullScreen) {
-        elem.mozRequestFullScreen();
-      } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
-      }
-    });
-    exitFullscreenBtn.addEventListener('click', function() {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      }
-    });
-    document.addEventListener('fullscreenchange', updateFullscreenButton);
-    document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
-    document.addEventListener('mozfullscreenchange', updateFullscreenButton);
-    document.addEventListener('MSFullscreenChange', updateFullscreenButton);
-    function updateFullscreenButton() {
-      if (document.fullscreenElement || document.webkitFullscreenElement ||
-          document.mozFullScreenElement || document.msFullscreenElement) {
-        fullscreenBtn.style.display = 'none';
-        exitFullscreenBtn.style.display = 'block';
-      } else {
-        fullscreenBtn.style.display = 'block';
-        exitFullscreenBtn.style.display = 'none';
-      }
-    }
-  }
   const videoFrameBtn = document.querySelector('.video-frame-btn');
   const videoFramePage = document.getElementById('video-frame-page');
   const backToMainBtn = document.getElementById('back-to-main');
@@ -2221,31 +2194,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const allFramesGrid = document.getElementById('all-frames-grid');
   const closeAllFramesBtn = document.getElementById('closeAllFrames');
   const extractionFpsSelect = document.getElementById('extractionFps');
-  let videoElement = null;
-  let videoFrames = [];
-  let currentFrameIndex = 0;
-  let totalFramesExtracted = 0;
-  let zoomLevel = 1.0;
-  let canvasOffsetX = 0;
-  let canvasOffsetY = 0;
-  let isNegativeActive = false;
-  let isGrayscaleActive = false;
-  let isUVActive = false;
-  let isMirrorActive = false;
-  let isDragging = false;
-  let dragStartX = 0;
-  let dragStartY = 0;
-  let shouldCancelExtraction = false;
-  let initialDistance = 0;
-
-  videoFrameBtn.addEventListener('click', async () => {
+  const frameSizeSelect = document.getElementById('frameSizeSelect');
+let videoElement = null;
+let videoFrames = [];
+let currentFrameIndex = 0;
+let totalFramesExtracted = 0;
+let zoomLevel = 1.0;
+let canvasOffsetX = 0;
+let canvasOffsetY = 0;
+let isNegativeActive = false;
+let isGrayscaleActive = false;
+let isUVActive = false;
+let isMirrorActive = false;
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let shouldCancelExtraction = false;
+let initialDistance = 0;
+let originalCanvasSize = { width: 0, height: 0 };
+videoFrameBtn.addEventListener('click', async () => {
     document.getElementById('main').style.display = 'none';
     videoFramePage.classList.add('active');
     fullscreenBtn.style.display = 'none';
     exitFullscreenBtn.style.display = 'none';
-  });
-
-  backToMainBtn.addEventListener('click', () => {
+    if (originalCanvasSize.width === 0 && originalCanvasSize.height === 0) {
+        const canvas = videoFrameCanvas;
+        canvas.offsetWidth;
+        originalCanvasSize.width = canvas.width;
+        originalCanvasSize.height = canvas.height;
+    }
+    if (videoFrameCanvas.width !== originalCanvasSize.width || videoFrameCanvas.height !== originalCanvasSize.height) {
+        videoFrameCanvas.width = originalCanvasSize.width;
+        videoFrameCanvas.height = originalCanvasSize.height;
+    }
+});
+backToMainBtn.addEventListener('click', () => {
     videoFramePage.classList.remove('active');
     document.getElementById('main').style.display = 'flex';
     if (videoElement) {
@@ -2265,8 +2248,6 @@ document.addEventListener('DOMContentLoaded', () => {
     applyCanvasTransform();
     if (videoFrameCanvas && videoFrameCtx) {
       videoFrameCtx.clearRect(0, 0, videoFrameCanvas.width, videoFrameCanvas.height);
-      videoFrameCanvas.width = 1;
-      videoFrameCanvas.height = 1;
     }
     if (videoFileInput) {
       videoFileInput.value = '';
@@ -2276,16 +2257,10 @@ document.addEventListener('DOMContentLoaded', () => {
       createFramesBtn.textContent = "Crea Fotogrammi";
       createFramesBtn.disabled = false;
     }
-    if (!isMobileDevice) {
-      fullscreenBtn.style.display = 'block';
-    }
-  });
-
+});
 videoFileInput.addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;
-
-    // 👇 RESET COMPLETO ANCHE QUI!
     videoFrames = [];
     currentFrameIndex = 0;
     totalFramesExtracted = 0;
@@ -2298,7 +2273,6 @@ videoFileInput.addEventListener('change', function(e) {
     if (videoFrameCanvas && videoFrameCtx) {
       videoFrameCtx.clearRect(0, 0, videoFrameCanvas.width, videoFrameCanvas.height);
     }
-
     const url = URL.createObjectURL(file);
     if (videoElement) {
       videoElement.pause();
@@ -2308,17 +2282,12 @@ videoFileInput.addEventListener('change', function(e) {
     videoElement = document.createElement('video');
     videoElement.src = url;
 });
-
 createFramesBtn.addEventListener('click', async function() {
     if (!videoElement) {
       alert("Carica prima un video.");
       return;
     }
-
-    // Ferma eventuali estrazioni in corso
     shouldCancelExtraction = true;
-
-    // Svuota gli array e resetta le variabili
     videoFrames = [];
     currentFrameIndex = 0;
     totalFramesExtracted = 0;
@@ -2326,41 +2295,29 @@ createFramesBtn.addEventListener('click', async function() {
     canvasOffsetX = 0;
     canvasOffsetY = 0;
     resetFilterStates();
-
-    // Pulisci il canvas
     if (videoFrameCanvas && videoFrameCtx) {
       videoFrameCtx.clearRect(0, 0, videoFrameCanvas.width, videoFrameCanvas.height);
     }
-
-    // Aggiorna l'interfaccia utente
     updateFrameInfo();
     applyCanvasTransform();
-
-    // Disattiva il bottone e avvia l'estrazione
     this.disabled = true;
     this.textContent = "Creazione in corso...";
-
-    // Avvia l'estrazione dei nuovi fotogrammi
+    document.getElementById('cancel-frames-btn').style.display = 'block';
     await extractFrames();
-
-    // Ripristina lo stato del bottone
+    document.getElementById('cancel-frames-btn').style.display = 'none';
     this.disabled = false;
     this.textContent = "Crea Fotogrammi";
-
-    // Mostra il primo fotogramma se estratto
     if (videoFrames.length > 0) {
       renderCurrentFrame();
       updateFrameInfo();
     }
 });
-
   document.getElementById('cancel-frames-btn').addEventListener('click', function() {
     shouldCancelExtraction = true;
     this.style.display = 'none';
     document.getElementById('create-frames-btn').disabled = false;
     document.getElementById('create-frames-btn').textContent = "Crea Fotogrammi";
   });
-
   async function extractFrames() {
     if (!videoElement) return;
     const duration = videoElement.duration;
@@ -2385,7 +2342,8 @@ createFramesBtn.addEventListener('click', async function() {
       videoFrames.push(frameCanvas);
       totalFramesExtracted = i + 1;
       updateFrameInfo();
-      if (i === currentFrameIndex) {
+      
+      if (i === 0 || i === currentFrameIndex) {
         renderCurrentFrame();
       }
       if (i % 10 === 0) {
@@ -2399,7 +2357,6 @@ createFramesBtn.addEventListener('click', async function() {
       renderCurrentFrame();
     }
   }
-
   function seekAndCaptureFrame(time, frameIndex) {
     return new Promise((resolve) => {
       videoElement.currentTime = time;
@@ -2416,7 +2373,6 @@ createFramesBtn.addEventListener('click', async function() {
         const handler = () => {
           if (Math.abs(videoElement.currentTime - time) < 0.1) {
             videoElement.removeEventListener('timeupdate', handler);
-     
             const canvas = document.createElement('canvas');
             canvas.width = videoElement.videoWidth;
             canvas.height = videoElement.videoHeight;
@@ -2429,67 +2385,46 @@ createFramesBtn.addEventListener('click', async function() {
       }
     });
   }
-
   function updateFrameInfo() {
     frameInfo.textContent = `Frame ${currentFrameIndex + 1} / ${totalFramesExtracted}`;
   }
-
   function applyCanvasTransform() {
     videoFrameCanvas.style.transform = `translate(${canvasOffsetX}px, ${canvasOffsetY}px) scale(${zoomLevel})`;
     clampOffset();
   }
-
 function renderCurrentFrame() {
     if (videoFrames.length === 0 || currentFrameIndex >= videoFrames.length) return;
-
     const frameCanvas = videoFrames[currentFrameIndex];
     const videoWidth = frameCanvas.width;
     const videoHeight = frameCanvas.height;
-
     const canvas = videoFrameCanvas;
     const ctx = videoFrameCtx;
-
-   
-    const containerWidth = canvas.clientWidth;
-    const containerHeight = canvas.clientHeight;
-
-    // Calcola il rapporto d'aspetto
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
     const videoRatio = videoWidth / videoHeight;
-    const containerRatio = containerWidth / containerHeight;
-
+    const canvasRatio = canvasWidth / canvasHeight; 
     let destWidth, destHeight, destX, destY;
-
-    if (videoRatio > containerRatio) {
-        // video più largo → limita alla larghezza
-        destWidth = containerWidth;
+    if (videoRatio > canvasRatio) {
+        destWidth = canvasWidth;
         destHeight = destWidth / videoRatio;
     } else {
-        // video più alto → limita all'altezza
-        destHeight = containerHeight;
+        destHeight = canvasHeight;
         destWidth = destHeight * videoRatio;
     }
-
-    // Centra l'immagine
-    destX = (containerWidth - destWidth) / 2;
-    destY = (containerHeight - destHeight) / 2;
-
-    // Pulisci il canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Disegna specchiato o normale
+    destX = (canvasWidth - destWidth) / 2;
+    destY = (canvasHeight - destHeight) / 2; 
+    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     if (isMirrorActive) {
         ctx.save();
-        ctx.translate(canvas.width, 0);
+        ctx.translate(canvasWidth, 0);
         ctx.scale(-1, 1);
         ctx.drawImage(frameCanvas, 0, 0, videoWidth, videoHeight, destX, destY, destWidth, destHeight);
         ctx.restore();
     } else {
         ctx.drawImage(frameCanvas, 0, 0, videoWidth, videoHeight, destX, destY, destWidth, destHeight);
     }
-
-    // Applica filtri
     if (isNegativeActive || isGrayscaleActive || isUVActive) {
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const imgData = ctx.getImageData(0, 0, canvasWidth, canvasHeight);
         const data = imgData.data;
         for (let i = 0; i < data.length; i += 4) {
             let r = data[i], g = data[i+1], b = data[i+2];
@@ -2502,28 +2437,22 @@ function renderCurrentFrame() {
         }
         ctx.putImageData(imgData, 0, 0);
     }
-
-    // Reset zoom/offset (se usi trasformazioni extra)
     zoomLevel = 1.0;
     canvasOffsetX = 0;
     canvasOffsetY = 0;
-    applyCanvasTransform(); // opzionale
+    applyCanvasTransform();
 }
-
-
   function navigateFrame(delta) {
     currentFrameIndex = Math.max(0, Math.min(videoFrames.length - 1, currentFrameIndex + delta));
     updateFrameInfo();
     renderCurrentFrame();
   }
-
   prevFrameBtn.addEventListener('click', () => {
     navigateFrame(-1);
   });
   nextFrameBtn.addEventListener('click', () => {
     navigateFrame(1);
   });
-
   document.addEventListener('keydown', function(event) {
     if (!videoFramePage.classList.contains('active')) return;
     if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
@@ -2535,7 +2464,6 @@ function renderCurrentFrame() {
       navigateFrame(1);
     }
   });
-
   applyNegativeBtn.addEventListener('click', () => {
     isNegativeActive = !isNegativeActive;
     applyNegativeBtn.classList.toggle('active', isNegativeActive);
@@ -2560,7 +2488,6 @@ function renderCurrentFrame() {
     resetFilterStates();
     renderCurrentFrame();
   });
-
   function resetFilterStates() {
     isNegativeActive = false;
     isGrayscaleActive = false;
@@ -2571,47 +2498,84 @@ function renderCurrentFrame() {
     applyUVBtn.classList.remove('active');
     applyMirrorBtn.classList.remove('active');
   }
-
-    saveFrameBtn.addEventListener('click', () => {
+saveFrameBtn.addEventListener('click', () => {
     if (videoFrames.length === 0 || currentFrameIndex >= videoFrames.length) return;
-
-    const originalFrame = videoFrames[currentFrameIndex]; // Il fotogramma originale non modificato
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    // 👇 IMPORANTE: Imposta le dimensioni del canvas alle dimensioni ORIGINALI del fotogramma
-    canvas.width = originalFrame.width;
-    canvas.height = originalFrame.height;
-
-    // Disegna il fotogramma originale SENZA ridimensionamento → nessun bordo nero!
-    ctx.drawImage(originalFrame, 0, 0);
-
-    // Applica eventuali filtri attivi (negativo, grigio, UV) SOLO sul canvas temporaneo
-    if (isNegativeActive || isGrayscaleActive || isUVActive) {
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imgData.data;
-        for (let i = 0; i < data.length; i += 4) {
-            let r = data[i], g = data[i+1], b = data[i+2];
-            if (isNegativeActive) { r = 255 - r; g = 255 - g; b = 255 - b; }
-            if (isGrayscaleActive) { const avg = (r+g+b)/3; r=g=b=avg; }
-            if (isUVActive) { r*=0.7; g*=0.8; b*=1.5; }
-            data[i] = Math.min(255, Math.max(0, r));
-            data[i+1] = Math.min(255, Math.max(0, g));
-            data[i+2] = Math.min(255, Math.max(0, b));
-        }
-        ctx.putImageData(imgData, 0, 0);
+    const originalFrame = videoFrames[currentFrameIndex];
+    const selectedSize = frameSizeSelect.value;
+    let targetWidth, targetHeight;
+    if (selectedSize === 'native') {
+      targetWidth = originalFrame.width;
+      targetHeight = originalFrame.height;
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+      ctx.drawImage(originalFrame, 0, 0);
+      if (isNegativeActive || isGrayscaleActive || isUVActive) {
+          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imgData.data;
+          for (let i = 0; i < data.length; i += 4) {
+              let r = data[i], g = data[i+1], b = data[i+2];
+              if (isNegativeActive) { r = 255 - r; g = 255 - g; b = 255 - b; }
+              if (isGrayscaleActive) { const avg = (r+g+b)/3; r=g=b=avg; }
+              if (isUVActive) { r*=0.7; g*=0.8; b*=1.5; }
+              data[i] = Math.min(255, Math.max(0, r));
+              data[i+1] = Math.min(255, Math.max(0, g));
+              data[i+2] = Math.min(255, Math.max(0, b));
+          }
+          ctx.putImageData(imgData, 0, 0);
+      }
+      const link = document.createElement('a');
+      link.download = `frame_${currentFrameIndex + 1}_${selectedSize}.png`;
+      link.href = canvas.toDataURL('image/png', 1.0); 
+      link.click();
+      setTimeout(() => {
+        canvas.remove();
+      }, 100);
+    } else {
+      [targetWidth, targetHeight] = selectedSize.split('x').map(Number);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, targetWidth, targetHeight);
+      const videoRatio = originalFrame.width / originalFrame.height;
+      const containerRatio = targetWidth / targetHeight;
+      let destWidth, destHeight;
+      if (videoRatio > containerRatio) {
+          destWidth = targetWidth;
+          destHeight = destWidth / videoRatio;
+      } else {
+          destHeight = targetHeight;
+          destWidth = destHeight * videoRatio;
+      }
+      const destX = (targetWidth - destWidth) / 2;
+      const destY = (targetHeight - destHeight) / 2;
+      ctx.drawImage(originalFrame, 0, 0, originalFrame.width, originalFrame.height, destX, destY, destWidth, destHeight);
+      if (isNegativeActive || isGrayscaleActive || isUVActive) {
+          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imgData.data;
+          for (let i = 0; i < data.length; i += 4) {
+              let r = data[i], g = data[i+1], b = data[i+2];
+              if (isNegativeActive) { r = 255 - r; g = 255 - g; b = 255 - b; }
+              if (isGrayscaleActive) { const avg = (r+g+b)/3; r=g=b=avg; }
+              if (isUVActive) { r*=0.7; g*=0.8; b*=1.5; }
+              data[i] = Math.min(255, Math.max(0, r));
+              data[i+1] = Math.min(255, Math.max(0, g));
+              data[i+2] = Math.min(255, Math.max(0, b));
+          }
+          ctx.putImageData(imgData, 0, 0);
+      }
+      const link = document.createElement('a');
+      link.download = `frame_${currentFrameIndex + 1}_${selectedSize}.png`;
+      link.href = canvas.toDataURL('image/png', 1.0);
+      link.click();
+      setTimeout(() => {
+        canvas.remove();
+      }, 100);
     }
-
-    // Salva il canvas temporaneo (senza bordi neri, intero fotogramma)
-    const link = document.createElement('a');
-    link.download = `frame_${currentFrameIndex + 1}.png`;
-    link.href = canvas.toDataURL('image/png', 1.0);
-    link.click();
-
-    // Pulisci il canvas temporaneo (opzionale, ma buona pratica)
-    canvas.remove();
 });
-
   viewAllFramesBtn.addEventListener('click', () => {
     if (videoFrames.length === 0) {
       alert("Nessun fotogramma da visualizzare.");
@@ -2648,13 +2612,10 @@ function renderCurrentFrame() {
     }
     allFramesModal.style.display = 'block';
   });
-
   closeAllFramesBtn.addEventListener('click', () => {
     allFramesModal.style.display = 'none';
   });
-
   const canvasContainer = document.getElementById('video-frame-canvas-container');
-
   function clampOffset() {
     const containerRect = canvasContainer.getBoundingClientRect();
     const canvasRect = videoFrameCanvas.getBoundingClientRect();
@@ -2665,13 +2626,11 @@ function renderCurrentFrame() {
     const minY = containerRect.height - canvasRect.height;
     canvasOffsetY = Math.min(maxY, Math.max(minY, canvasOffsetY));
   }
-
   function getDistance(touches) {
     const dx = touches[0].clientX - touches[1].clientX;
     const dy = touches[0].clientY - touches[1].clientY;
     return Math.sqrt(dx*dx + dy*dy);
   }
-
   canvasContainer.addEventListener('mousedown', (e) => {
     if (e.button === 0) {
       isDragging = true;
@@ -2731,20 +2690,16 @@ function renderCurrentFrame() {
     }
   });
   canvasContainer.style.cursor = 'grab';
-
   const toggleSettingsBtn = document.getElementById('toggle-settings-btn');
   toggleSettingsBtn.addEventListener('click', function() {
     settingsBanner.classList.toggle('active');
     if (settingsBanner.classList.contains('active')) {
       this.textContent = "❌ Chiudi Impostazioni";
     } else {
-      this.textContent = "⚙️ Impostazioni";
+      this.textContent = "⚙️Impostazioni";
     }
   });
 });
 </script>
 </body>
 </html>
-
-
-
