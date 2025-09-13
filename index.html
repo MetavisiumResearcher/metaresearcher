@@ -70,6 +70,7 @@
 #quadrante-wrapper {
   flex: 1; /* Occupa tutto lo spazio disponibile */
   width: 100%;
+  height: 100%; /* ✅ Aggiungi questa riga CRUCIALE */
   overflow: hidden;
   position: relative;
 }
@@ -659,10 +660,15 @@
     body {
       overflow: hidden;
     }
-    #main {
-      flex-direction: row;
-      height: calc(100% - 72px);
-    }
+ #main {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* ✅ Questo è corretto */
+  gap: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+}
     #quadrante-wrapper {
       height: 100%;
     }
@@ -1991,7 +1997,7 @@ function rgbToHsl(r, g, b) {
     { selector: '.slider-group:nth-child(10) .custom-slider-container', min: 20, max: 200, step: 1, initial: 100, prop: 'sliderScala' },
     { selector: '.slider-group:nth-child(11) .custom-slider-container', min: 1, max: 10, step: 0.1, initial: 1, prop: 'sliderDettagli' },
     { selector: '.slider-group:nth-child(12) .custom-slider-container', min: 1, max: 3, step: 0.1, initial: 1, prop: 'sliderNitidezza' },
-    { selector: '.slider-group:nth-child(13) .custom-slider-container', min: 0, max: 100, step: 1, initial: 0, prop: 'sliderUV' } // ✅ CORRETTO: nth-child(13) per Filtro UV
+    { selector: '.slider-group:nth-child(13) .custom-slider-container', min: 0, max: 100, step: 1, initial: 0, prop: 'sliderUV' }
   ];
   sliderConfigs.forEach(config => {
     const container = div.querySelector(config.selector);
@@ -2147,29 +2153,6 @@ function toggleRecord(q, btnEl){
     quadranti.forEach(q => {
       if(q.active) {
         resizeCanvasToDisplaySize(q.canvas);
-      }
-    });
-  });
-  quadranti.forEach(q => resizeCanvasToDisplaySize(q.canvas));
-  document.querySelectorAll('.quadrante').forEach(quad => {
-  quad.addEventListener('dblclick', function(event) {
-      event.preventDefault();
-      if (this.classList.contains('expanded')) {
-        this.classList.remove('expanded');
-        document.querySelectorAll('.monitor-spento').forEach(spento => {
-          spento.style.display = 'none';
-          if (spento.parentElement.classList.contains('off')) {
-            spento.style.display = 'block';
-          }
-        });
-      } else {
-        document.querySelectorAll('.quadrante').forEach(q => {
-          q.classList.remove('expanded');
-        });
-        this.classList.add('expanded');
-        document.querySelectorAll('.monitor-spento').forEach(spento => {
-          spento.style.display = 'none';
-        });
       }
     });
   });
