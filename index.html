@@ -1153,49 +1153,42 @@ Assicurati che:
     ctx.putImageData(img,0,0);
   }
   function drawPlasmaAnim(q){
-    const ctx = q.ctx; const canvas = q.canvas;
+    const ctx = q.ctx, canvas = q.canvas;
     resizeCanvasToDisplaySize(canvas);
     const w = canvas.width, h = canvas.height;
-    const scale = Math.max(6, parseFloat(q.sliderScala.value));
-    const detail = parseFloat(q.sliderDettagli.value || 1);
-    const t = performance.now()/800 * (parseFloat(q.sliderVel.value)/30);
-    const espansione = parseFloat(q.sliderEspansione.value) / 50;
+    const t = performance.now()/1000 * (parseFloat(q.sliderVel.value)/30);
+    const scale = Math.max(30, parseFloat(q.sliderScala.value)*1.2);
+    const espansione = parseFloat(q.sliderEspansione.value)/50;
     const img = ctx.createImageData(w,h);
-    const reduce = q.pareidolia;
-    const lum = parseFloat(q.sliderLum.value) / 128;
-    for(let y=0;y<h;y++){
-      for(let x=0;x<w;x++){
-        const timeFactor = t * 1.2;
-        const nx = x/(scale*0.8)*detail + Math.sin(timeFactor*0.2)*0.3 * espansione;
-        const ny = y / (scale * 1) * detail + Math.cos(timeFactor * 0.3) * 0.3 * espansione;
-        let v;
-        if(reduce){
-          v = (
-            perlin.noise((nx-0.1), ny, timeFactor) +
-            perlin.noise((nx+0.1), ny, timeFactor) +
-            perlin.noise(nx, (ny-0.1), timeFactor) +
-            perlin.noise(nx, (ny + 0.1), timeFactor)
-          ) / 4 +
-          0.5 * (
-            perlin.noise(nx*2, ny*2, timeFactor*1.7) +
-            perlin.noise((nx+0.2)*2, (ny+0.2)*2, timeFactor*1.7)
-          ) / 2;
-        } else {
-          v = perlin.noise(nx, ny, timeFactor) +
-              0.5*perlin.noise(nx*2, ny*2, timeFactor*1.7);
+    const lum = parseFloat(q.sliderLum.value)/128;
+
+    for(let y=0; y<h; y++){
+        for(let x=0; x<w; x++){
+            const nx = x/scale;
+            const ny = y/scale;
+            let v = 0;
+            let amp = 1;
+            let freq = 1;
+            for(let o=0; o<5; o++){
+                v += amp * perlin.noise(nx*freq, ny*freq, t*freq*0.5);
+                amp *= 0.5; freq *= 2;
+            }
+
+            let val = (v+1) * 64; // scala più visibile
+            val *= lum;
+            val = Math.min(255, Math.max(0, val));
+
+            const i = (y*w + x)*4;
+            let [r,g,b] = finalizeRGB(val,val,val,q);
+            img.data[i] = r;
+            img.data[i+1] = g;
+            img.data[i+2] = b;
+            img.data[i+3] = 255;
         }
-        v += 0.2 * Math.sin(x/20 + timeFactor) * Math.cos(y/18 + timeFactor*0.8) * espansione;
-        let val = Math.floor((v+1)*128);
-        val = val * lum;
-        val = Math.min(255, Math.max(0, val));
-        val = processPixelRaw(val,q);
-        const i = (y*w + x) * 4;
-        let [r,g,b] = finalizeRGB(val,val,val,q);
-        img.data[i]=r; img.data[i+1]=g; img.data[i+2]=b; img.data[i+3]=255;
-      }
     }
+
     ctx.putImageData(img,0,0);
-  }
+}
   function drawSmokeNoise(q){
     const ctx = q.ctx, canvas = q.canvas;
     resizeCanvasToDisplaySize(canvas);
@@ -1766,7 +1759,7 @@ function rgbToHsl(r, g, b) {
   const quadranti = [];
   const noiseOptionsHTML = `
     <option value="plasma">Plasma</option>
-    <option value="plasmaAnim">Plasma Animato</option>
+    <option value="plasmaAnim">Smoke Soft</option>
     <option value="smoke">Smoke Noise</option>
     <option value="smokeswirl">Smoke Swirl</option>
     <option value="smokewisp">Smoke Wisps</option>
@@ -2686,3 +2679,4 @@ saveFrameBtn.addEventListener('click', () => {
 </script>
 </body>
 </html>
+
